@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 14:28:03 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/12 10:57:52 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/12 11:24:31 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,25 @@ void	lock_a_print(t_data *data, int num)
 	if (num == 0)
 	{
 		pthread_mutex_lock(&data->output);
-		printf("Philosopher %d has taken fork\n", data->phil_id);
+		printf("[%ld] Philosopher %d has taken fork\n", get_time() - data->birth, data->phil_id);
 		pthread_mutex_unlock(&data->output);
 	}
 	if (num == 1)
 	{
 		pthread_mutex_lock(&data->output);
-		printf("Philosopher %d is eating\n", data->phil_id);
+		printf("[%ld] Philosopher %d is eating\n", get_time() - data->birth, data->phil_id);
 		pthread_mutex_unlock(&data->output);
 	}
 	if (num == 2)
 	{
 		pthread_mutex_lock(&data->output);
-		printf("Philosopher %d is sleeping\n", data->phil_id);
+		printf("[%ld] Philosopher %d is sleeping\n", get_time() - data->birth, data->phil_id);
 		pthread_mutex_unlock(&data->output);
 	}
 	if (num == 3)
 	{
 		pthread_mutex_lock(&data->output);
-		printf("Philosopher %d is thinking\n", data->phil_id);
+		printf("[%ld] Philosopher %d is thinking\n", get_time() - data->birth, data->phil_id);
 		pthread_mutex_unlock(&data->output);
 	}
 }
@@ -119,11 +119,11 @@ void	*funeral(void *ptr)
 			printf("[%ld] Philosopher %d died\n", get_time() - data->birth, data->phil_id);
 			return (0);
 		}
-		// if (data->lunch_times_on == 1)
-		// {
-		// 	if (data->eat_nbr == 0)
-		// 		return (0);
-		// }
+		if (data->lunch_times_on == 1)
+		{
+			if (data->eat_nbr == 0)
+				return (0);
+		}
 	}
 	return (0);
 }
