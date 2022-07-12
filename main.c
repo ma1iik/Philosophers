@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 14:28:03 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/12 09:33:17 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/12 10:57:52 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	phils_data(int ac, char **av, t_data *data)
 	int		i;
 
 	i = 0;
+	data->must_die = 0;
 	data->av1 = ft_atoi(av[1]);
 	pthread_mutex_init(&data->output, NULL);
 	while (i < ft_atoi(av[1]))
@@ -48,100 +49,58 @@ void	phils_data(int ac, char **av, t_data *data)
 	}
 }
 
-void	routine(t_data *data)
+void	lock_a_print(t_data *data, int num)
 {
-	pthread_mutex_lock(&data->left_fork);
-	pthread_mutex_lock(&data->output);
-	printf("Philosopher %d has taken fork\n", data->phil_id);
-	pthread_mutex_unlock(&data->output);
-	pthread_mutex_lock(data->right_fork);
-	pthread_mutex_lock(&data->output);
-	printf("Philosopher %d is eating\n", data->phil_id);
-	pthread_mutex_unlock(&data->output);
-	ft_usleep(data->eat_time);
-	data->starving = get_time();
-	pthread_mutex_unlock(data->right_fork);
-	pthread_mutex_unlock(&data->left_fork);
-	// if (data->lunch_times_on == 1)
-	// {
-	// 	data->eat_nbr--;
-	// 	printf("\nPhil [%d] needs to eat [%d] more times\n\n", data->phil_id, data->eat_nbr);
-	// }
-	pthread_mutex_lock(&data->output);
-	printf("Philosopher %d is sleeping\n", data->phil_id);
-	pthread_mutex_unlock(&data->output);
-	ft_usleep(data->sleep_time);
-	pthread_mutex_lock(&data->output);
-	printf("Philosopher %d is thinking\n", data->phil_id);
-	pthread_mutex_unlock(&data->output);
-}
-
-void	routine1(t_data *data)
-{
-	pthread_mutex_lock(data->right_fork);
-	pthread_mutex_lock(&data->output);
-	printf("Philosopher %d has taken fork\n", data->phil_id);
-	pthread_mutex_unlock(&data->output);
-	pthread_mutex_lock(&data->left_fork);
-	pthread_mutex_lock(&data->output);
-	printf("Philosopher %d is eating\n", data->phil_id);
-	pthread_mutex_unlock(&data->output);
-	ft_usleep(data->eat_time);
-	data->starving = get_time();
-	pthread_mutex_unlock(&data->left_fork);
-	pthread_mutex_unlock(data->right_fork);
-	if (data->lunch_times_on == 1)
+	if (num == 0)
 	{
-		data->eat_nbr--;
-		printf("\nPhil [%d] needs to eat [%d] more times\n\n", data->phil_id, data->eat_nbr);
+		pthread_mutex_lock(&data->output);
+		printf("Philosopher %d has taken fork\n", data->phil_id);
+		pthread_mutex_unlock(&data->output);
 	}
-	pthread_mutex_lock(&data->output);
-	printf("Philosopher %d is sleeping\n", data->phil_id);
-	pthread_mutex_unlock(&data->output);
-	ft_usleep(data->sleep_time);
-	pthread_mutex_lock(&data->output);
-	printf("Philosopher %d is thinking\n", data->phil_id);
-	pthread_mutex_unlock(&data->output);
+	if (num == 1)
+	{
+		pthread_mutex_lock(&data->output);
+		printf("Philosopher %d is eating\n", data->phil_id);
+		pthread_mutex_unlock(&data->output);
+	}
+	if (num == 2)
+	{
+		pthread_mutex_lock(&data->output);
+		printf("Philosopher %d is sleeping\n", data->phil_id);
+		pthread_mutex_unlock(&data->output);
+	}
+	if (num == 3)
+	{
+		pthread_mutex_lock(&data->output);
+		printf("Philosopher %d is thinking\n", data->phil_id);
+		pthread_mutex_unlock(&data->output);
+	}
 }
 
-void	*phils_routine(void *ptr) 
+void	*phils_routine(void *ptr)
 {
 	t_data	*data;
 
 	data = ptr;
+	if (data->phil_id % 2 == 0)
+		ft_usleep(data->eat_time / 10);
 	while (1)
 	{
 		if (data->lunch_times_on == 1 && data->eat_nbr == 0)
 			return (0);
-		if (data->phil_id % 2 == 0)
-			usleep(data->eat_time / 10);
-		// if (data->phil_id == data->av1)
-		// 	routine1(data);
-		// else
 		pthread_mutex_lock(&data->left_fork);
-		pthread_mutex_lock(&data->output);
-		printf("Philosopher %d has taken fork\n", data->phil_id);
-		pthread_mutex_unlock(&data->output);
+		lock_a_print(data, 0);
 		pthread_mutex_lock(data->right_fork);
-		pthread_mutex_lock(&data->output);
-		printf("Philosopher %d is eating\n", data->phil_id);
-		pthread_mutex_unlock(&data->output);
+		lock_a_print(data, 1);
 		ft_usleep(data->eat_time);
 		data->starving = get_time();
 		pthread_mutex_unlock(data->right_fork);
 		pthread_mutex_unlock(&data->left_fork);
 		if (data->lunch_times_on == 1)
-		{
 			data->eat_nbr--;
-			printf("\nPhil [%d] needs to eat [%d] more times\n\n", data->phil_id, data->eat_nbr);
-		}
-		pthread_mutex_lock(&data->output);
-		printf("Philosopher %d is sleeping\n", data->phil_id);
-		pthread_mutex_unlock(&data->output);
+		lock_a_print(data, 2);
 		ft_usleep(data->sleep_time);
-		pthread_mutex_lock(&data->output);
-		printf("Philosopher %d is thinking\n", data->phil_id);
-		pthread_mutex_unlock(&data->output);
+		lock_a_print(data, 3);
 	}
 }
 
