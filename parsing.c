@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 19:57:13 by misrailo          #+#    #+#             */
-/*   Updated: 2022/06/30 15:39:25 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/12 11:39:25 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	check_if_digit(int ac, char **av)
 		j = 0;
 		while (av[i][j] != '\0')
 		{
-			printf("%c\n", av[i][j]);
 			if (ft_isalpha(av[i][j]) == 1)
 			{
 				printf("Not number\n");

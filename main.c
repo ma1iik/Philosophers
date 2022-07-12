@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 14:28:03 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/12 11:24:31 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/12 11:58:14 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	phils_data(int ac, char **av, t_data *data)
 	int		i;
 
 	i = 0;
-	data->must_die = 0;
-	data->av1 = ft_atoi(av[1]);
 	pthread_mutex_init(&data->output, NULL);
 	while (i < ft_atoi(av[1]))
 	{
@@ -28,6 +26,7 @@ void	phils_data(int ac, char **av, t_data *data)
 		data[i].sleep_time = ft_atoi(av[4]);
 		data[i].starving = 0;
 		data[i].birth = 0;
+		data[i].right_fork = 0;
 		pthread_mutex_init(&data[i].left_fork, NULL);
 		if (ac == 6)
 		{
@@ -142,7 +141,7 @@ void	phils_thread(char **argv, t_data *data)
 		i++;
 	}
 	i = 0;
-	while (i < data[i].av1)
+	while (i < ft_atoi(argv[1]))
 	{
 		pthread_create(&death, NULL, &funeral, &data[i]);
 		pthread_join(death, NULL);
