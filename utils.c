@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 06:29:10 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/11 23:54:58 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/12 09:26:32 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	get_time(void)
 {
-	int				time;
+	long int		time;
 	struct timeval	current_time;
 
 	time = 0;

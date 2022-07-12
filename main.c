@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 14:28:03 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/12 02:06:21 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/12 09:33:17 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	phils_data(int ac, char **av, t_data *data)
 	int		i;
 
 	i = 0;
-	data->must_die = 0;
 	data->av1 = ft_atoi(av[1]);
 	pthread_mutex_init(&data->output, NULL);
 	while (i < ft_atoi(av[1]))
@@ -51,8 +50,6 @@ void	phils_data(int ac, char **av, t_data *data)
 
 void	routine(t_data *data)
 {
-	if (data->lunch_times_on == 1 && data->eat_nbr == 0)
-		return ;
 	pthread_mutex_lock(&data->left_fork);
 	pthread_mutex_lock(&data->output);
 	printf("Philosopher %d has taken fork\n", data->phil_id);
@@ -65,11 +62,11 @@ void	routine(t_data *data)
 	data->starving = get_time();
 	pthread_mutex_unlock(data->right_fork);
 	pthread_mutex_unlock(&data->left_fork);
-	if (data->lunch_times_on == 1)
-	{
-		data->eat_nbr--;
-		printf("\nPhil [%d] needs to eat [%d] more times\n\n", data->phil_id, data->eat_nbr);
-	}
+	// if (data->lunch_times_on == 1)
+	// {
+	// 	data->eat_nbr--;
+	// 	printf("\nPhil [%d] needs to eat [%d] more times\n\n", data->phil_id, data->eat_nbr);
+	// }
 	pthread_mutex_lock(&data->output);
 	printf("Philosopher %d is sleeping\n", data->phil_id);
 	pthread_mutex_unlock(&data->output);
@@ -81,8 +78,6 @@ void	routine(t_data *data)
 
 void	routine1(t_data *data)
 {
-	if (data->lunch_times_on == 1 && data->eat_nbr == 0)
-		return ;
 	pthread_mutex_lock(data->right_fork);
 	pthread_mutex_lock(&data->output);
 	printf("Philosopher %d has taken fork\n", data->phil_id);
@@ -109,24 +104,44 @@ void	routine1(t_data *data)
 	pthread_mutex_unlock(&data->output);
 }
 
-void	*phils_routine(void *ptr)
+void	*phils_routine(void *ptr) 
 {
 	t_data	*data;
 
 	data = ptr;
 	while (1)
 	{
+		if (data->lunch_times_on == 1 && data->eat_nbr == 0)
+			return (0);
 		if (data->phil_id % 2 == 0)
-			usleep(1000);
-		if (data->phil_id == data->av1)
-			routine1(data);
-		else
-			routine(data);
+			usleep(data->eat_time / 10);
+		// if (data->phil_id == data->av1)
+		// 	routine1(data);
+		// else
+		pthread_mutex_lock(&data->left_fork);
+		pthread_mutex_lock(&data->output);
+		printf("Philosopher %d has taken fork\n", data->phil_id);
+		pthread_mutex_unlock(&data->output);
+		pthread_mutex_lock(data->right_fork);
+		pthread_mutex_lock(&data->output);
+		printf("Philosopher %d is eating\n", data->phil_id);
+		pthread_mutex_unlock(&data->output);
+		ft_usleep(data->eat_time);
+		data->starving = get_time();
+		pthread_mutex_unlock(data->right_fork);
+		pthread_mutex_unlock(&data->left_fork);
 		if (data->lunch_times_on == 1)
 		{
-			if (data->eat_nbr == 0)
-				return (0);
+			data->eat_nbr--;
+			printf("\nPhil [%d] needs to eat [%d] more times\n\n", data->phil_id, data->eat_nbr);
 		}
+		pthread_mutex_lock(&data->output);
+		printf("Philosopher %d is sleeping\n", data->phil_id);
+		pthread_mutex_unlock(&data->output);
+		ft_usleep(data->sleep_time);
+		pthread_mutex_lock(&data->output);
+		printf("Philosopher %d is thinking\n", data->phil_id);
+		pthread_mutex_unlock(&data->output);
 	}
 }
 
@@ -145,44 +160,40 @@ void	*funeral(void *ptr)
 			printf("[%ld] Philosopher %d died\n", get_time() - data->birth, data->phil_id);
 			return (0);
 		}
-		if (data->lunch_times_on == 1)
-		{
-			if (data->eat_nbr == 0)
-				return (0);
-		}
+		// if (data->lunch_times_on == 1)
+		// {
+		// 	if (data->eat_nbr == 0)
+		// 		return (0);
+		// }
 	}
 	return (0);
 }
 
 void	phils_thread(char **argv, t_data *data)
 {
-	int		i;
-	// pthread_t	death;
+	int			i;
+	pthread_t	death;
 
 	i = 0;
 	while (i < ft_atoi(argv[1]))
 	{
-		if (i + 1 == ft_atoi(argv[1]))
-		{
-			/*change to grab opposite fork later*/
-			data[i].birth = get_time();
-			pthread_create(&data[i].phil, NULL, &phils_routine, &data[i]);
-		}
-		else
-		{
-			data[i].birth = get_time();
-			pthread_create(&data[i].phil, NULL, &phils_routine, &data[i]);
-		}
+		data[i].birth = get_time();
+		data[i].starving = get_time();
+		pthread_create(&data[i].phil, NULL, &phils_routine, &data[i]);
 		i++;
 	}
 	i = 0;
-	// pthread_create(&death, NULL, &funeral, data);
-	while (i < ft_atoi(argv[1]))
+	while (i < data[i].av1)
 	{
-		pthread_join(data[i].phil, NULL);
+		pthread_create(&death, NULL, &funeral, &data[i]);
+		pthread_join(death, NULL);
 		i++;
 	}
-	// pthread_join(death, NULL);
+	// while (i < ft_atoi(argv[1]))
+	// {
+	// 	pthread_join(data[i].phil, NULL);
+	// 	i++;
+	// }
 }
 
 int	main(int ac, char **av)
