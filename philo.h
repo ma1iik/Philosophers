@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 02:30:46 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/15 06:39:44 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/15 10:55:49 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
-# include "Libft/libft.h"
 # include <stdio.h>
 # include <string.h>
 # include <sys/time.h>

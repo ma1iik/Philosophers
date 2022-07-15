@@ -6,11 +6,20 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 19:57:13 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/12 11:39:25 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/15 10:55:10 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_isalpha(int c)
+{
+	if (!((c >= 'a' && c <= 'z')
+			|| (c >= 'A' && c <= 'Z')))
+		return (0);
+	else
+		return (1);
+}
 
 int	check_if_digit(int ac, char **av)
 {
@@ -39,7 +48,7 @@ void	parsing(int ac, char **av)
 {
 	if (ac != 5 && ac != 6)
 	{
-		ft_printf("Error\n");
+		printf("Error\n");
 		exit (EXIT_FAILURE);
 	}
 	check_if_digit(ac, av);
