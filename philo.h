@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 02:30:46 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/12 11:52:24 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/15 06:39:44 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_data
 	pthread_mutex_t	left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_t		phil;
+	int				av1;
 }	t_data;
 
 void	parsing(int ac, char **av);

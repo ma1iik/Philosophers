@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 06:29:10 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/12 09:26:32 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/15 06:33:45 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,9 @@ int	get_time(void)
 
 void	ft_usleep(int ms)
 {
-	struct timeval	now;
-	struct timeval	start;
+	long int	time;
 
-	gettimeofday(&start, 0);
-	gettimeofday(&now, 0);
-	while (((now.tv_sec - start.tv_sec) * 1000
-			+ (now.tv_usec - start.tv_usec) / 1000) > ms)
-	{
-		usleep(10);
-		gettimeofday(&now, 0);
-	}
+	time = get_time();
+	while ((get_time() - time) < ms)
+		usleep(ms);
 }
-
-// get time now  >= start of starv + death
-
-// time now - start of starv >= death
-
-// tim now 13
-// sart of starv 12
-// 0.5
