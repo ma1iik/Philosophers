@@ -6,16 +6,17 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 19:57:13 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/15 12:25:36 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/17 01:01:05 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	ft_isalpha(int c)
+int	ft_isdigit(int c)
 {
-	if (!((c >= 'a' && c <= 'z')
-			|| (c >= 'A' && c <= 'Z')))
+	if (c >= '0' && c <= '9')
+		return (0);
+	else if (c == '+' || c == '-')
 		return (0);
 	else
 		return (1);
@@ -32,10 +33,10 @@ int	check_if_digit(int ac, char **av)
 		j = 0;
 		while (av[i][j] != '\0')
 		{
-			if (ft_isalpha(av[i][j]) == 1)
+			if (ft_isdigit(av[i][j]))
 			{
 				printf("Not number\n");
-				exit (EXIT_FAILURE);
+				return (1);
 			}
 			j++;
 		}
@@ -44,9 +45,19 @@ int	check_if_digit(int ac, char **av)
 	return (0);
 }
 
-void	parsing(int ac, char **av)
+int	parsing(int ac, char **av)
 {
-	check_if_digit(ac, av);
+	int		i;
+
+	i = 0;
+	while (av[++i])
+	{
+		if (ft_atoi(av[i]) < 0 || ft_atoi(av[i]) >= MAX)
+			return (1);
+	}
+	if (check_if_digit(ac, av))
+		return (1);
+	return (0);
 }
 
 void	*ft_memset(void *s, int c, size_t len)

@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 14:28:03 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/15 13:31:28 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/07/17 01:01:39 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	main(int ac, char **av)
 	data = ft_calloc(sizeof(t_data), ft_atoi(av[1]));
 	if (ac != 5 && ac != 6)
 		return (0);
-	parsing(ac, av);
+	if (parsing(ac, av))
+		return (0);
 	phils_data(ac, av, data);
 	phils_thread(av, data);
 	ft_free(data);
