@@ -6,11 +6,11 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 06:29:10 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/15 11:12:51 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:11:29 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 int	get_time(void)
 {

@@ -6,11 +6,11 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 14:08:43 by misrailo          #+#    #+#             */
-/*   Updated: 2022/08/19 14:08:44 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:11:15 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-include "../inc/philo.h"
+#include "philo.h"
 
 int	ft_isdigit(int c)
 {

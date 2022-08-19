@@ -6,11 +6,11 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 14:28:03 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/17 01:01:39 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:08:17 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 void	init_forks(char **av, t_data *data)
 {

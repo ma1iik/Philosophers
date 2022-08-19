@@ -6,11 +6,11 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 13:01:49 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/15 13:02:15 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:07:36 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 void	lock_a_print(t_data *data, int num)
 {

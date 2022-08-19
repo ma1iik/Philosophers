@@ -6,11 +6,11 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 14:09:39 by misrailo          #+#    #+#             */
-/*   Updated: 2022/08/19 14:09:42 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/08/19 17:01:21 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+#include "philo.h"
 
 // void	init_forks(char **av, t_data *data)
 // {
@@ -35,7 +35,7 @@ void	phils_data(int ac, char **av, t_data *data)
 	pthread_mutex_init(&data->output, NULL);
 	while (i < ft_atoi(av[1]))
 	{
-		data[i].av1 = ft_atoi(av[1]);
+		data[i].av1 = data->av1;
 		data[i].phil_id = i + 1;
 		data[i].death_time = ft_atoi(av[2]);
 		data[i].eat_time = ft_atoi(av[3]);
@@ -72,17 +72,20 @@ int	main(int ac, char **av)
 	t_data		*data;
 
 	data = ft_calloc(sizeof(t_data), ft_atoi(av[1]));
+	data->id = ft_calloc(sizeof(data->id), ft_atoi(av[1]));
 	if (ac != 5 && ac != 6)
 		return (0);
 	if (parsing(ac, av))
 		return (0);
 	sem_unlink("fork");
-	sem_unlink("outputtinh");
+	sem_unlink("outputting");
 	data->outputting = sem_open("outputting", O_CREAT, 0644, 1);
 	data->fork = sem_open("fork", O_CREAT, 0644, ft_atoi(av[1]));
+	data->av1 = ft_atoi(av[1]);
 	phils_data(ac, av, data);
 	phils_forks(data);
-	phils_thread(av, data);
+	//phils_thread(av, data);
 	ft_free(data);
 	return (0);
 }
+
