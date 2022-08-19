@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 19:57:13 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/17 01:01:05 by misrailo         ###   ########.fr       */
+/*   Created: 2022/08/19 14:08:43 by misrailo          #+#    #+#             */
+/*   Updated: 2022/08/19 14:08:44 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/philo.h"
+include "../inc/philo.h"
 
 int	ft_isdigit(int c)
 {

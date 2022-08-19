@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 02:30:46 by misrailo          #+#    #+#             */
-/*   Updated: 2022/07/17 01:01:18 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/08/19 14:14:29 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,20 @@
 # include <stdio.h>
 # include <string.h>
 # include <sys/time.h>
+# include <semaphore.h>
+# include <signal.h>
 
 # define MAX 2147483647
 
 typedef struct s_data
 {
+	int				av1;
 	int				phil_id;
 	long int		death_time;
 	long int		eat_time;
 	long int		sleep_time;
-	int				eat_nbr;
 	long int		birth;
+	int				eat_nbr;
 	int				starving;
 	int				lunch_times_on;
 	int				must_die;
@@ -36,10 +39,12 @@ typedef struct s_data
 	pthread_mutex_t	left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_t		phil;
-	int				av1;
+	sem_t			*fork;
+	sem_t			*outputting;
+	int				*id;
 }	t_data;
 
-int		parsing(int ac, char **av);
+int			parsing(int ac, char **av);
 int			get_time(void);
 void		ft_usleep(int ms);
 int			ft_isneg(int x);
@@ -53,5 +58,7 @@ void		*funeral(void *ptr);
 void		*phils_routine(void *ptr);
 void		last_phil_routine(t_data *data);
 void		lock_a_print(t_data *data, int num);
+int			routine_bonus(t_data *data);
+int			phils_forks(t_data *data);
 
 #endif
