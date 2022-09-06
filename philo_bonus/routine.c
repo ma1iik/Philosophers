@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 14:08:56 by misrailo          #+#    #+#             */
-/*   Updated: 2022/08/19 17:07:38 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/09/06 16:01:48 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,44 +66,12 @@ void	*funeral(void *ptr)
 	}
 }
 
-// void	phils_thread(char **argv, t_data *data)
-// {
-// 	int			i;
-// 	int			*res;
-// 	pthread_t	death;
-
-// 	i = -1;
-// 	while (++i < ft_atoi(argv[1]))
-// 	{
-// 		data[i].birth = get_time();
-// 		data[i].starving = get_time();
-// 		pthread_create(&data[i].phil, NULL, &phils_routine, &data[i]);
-// 	}
-// 	i = 0;
-// 	while (i < ft_atoi(argv[1]))
-// 	{
-// 		pthread_create(&death, NULL, &funeral, &data[i]);
-// 		pthread_join(death, (void **) &res);
-// 		if (*res == 1)
-// 		{
-// 			free(res);
-// 			return ;
-// 		}
-// 		i++;
-// 	}
-// 	free(res);
-// 	return ;
-// }
-
 int	routine_bonus(t_data *data)
 {
 	pthread_t	death;
 	int			*res;
 
 	pthread_create(&death, NULL, &funeral, &data);
-	data->birth = get_time();
-	data->starving = get_time();
-	printf("%d\n", data->phil_id);
 	while (1)
 	{
 		sem_wait(data->fork);
@@ -133,8 +101,6 @@ int	phils_forks(t_data *data)
 {
 	int			i;
 	int			j;
-	//int			*res;
-	//pthread_t	death;
 
 	i = 0;
 	while (i < data->av1)
@@ -144,25 +110,14 @@ int	phils_forks(t_data *data)
 		{
 			if (data[i].phil_id % 2 == 0)
 				ft_usleep(data->eat_time / 10);
+			data[i].birth = get_time();
+			data[i].starving = get_time();
 			routine_bonus(&data[i]);
 		}
 		else
 			data->id[i] = j;
 		i++;
 	}
-	// i = 0;
-	// while (i < data[i].av1)
-	// {
-	// 	pthread_create(&death, NULL, &funeral, &data[i]);
-	// 	pthread_join(death, (void **) &res);
-	// 	if (*res == 1)
-	// 	{
-	// 		free(res);
-	// 		return (0);
-	// 	}
-	// 	i++;
-	// }
-	// free(res);
 	wait(NULL);
 	i = 0;
 	while (i < data->av1)

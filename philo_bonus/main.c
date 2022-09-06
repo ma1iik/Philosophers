@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 14:09:39 by misrailo          #+#    #+#             */
-/*   Updated: 2022/08/19 17:01:21 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/09/06 16:02:52 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ int	main(int ac, char **av)
 	data->av1 = ft_atoi(av[1]);
 	phils_data(ac, av, data);
 	phils_forks(data);
-	//phils_thread(av, data);
 	ft_free(data);
 	return (0);
 }
-
