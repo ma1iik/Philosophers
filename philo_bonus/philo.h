@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 02:30:46 by misrailo          #+#    #+#             */
-/*   Updated: 2022/08/19 14:14:29 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/09/20 05:45:16 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		*funeral(void *ptr);
 void		*phils_routine(void *ptr);
 void		last_phil_routine(t_data *data);
 void		lock_a_print(t_data *data, int num);
-int			routine_bonus(t_data *data);
-int			phils_forks(t_data *data);
+void		routine_bonus(t_data *data);
+int			phils_forks(t_data *data, int i, int j);
 
 #endif

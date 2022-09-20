@@ -6,26 +6,11 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 14:09:39 by misrailo          #+#    #+#             */
-/*   Updated: 2022/09/06 16:02:52 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/09/20 05:46:37 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// void	init_forks(char **av, t_data *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < ft_atoi(av[1]))
-// 	{
-// 		if (i == 0)
-// 			data[i].right_fork = &data[ft_atoi(av[1]) - 1].left_fork;
-// 		else
-// 			data[i].right_fork = &data[i - 1].left_fork;
-// 		i++;
-// 	}
-// }
 
 void	phils_data(int ac, char **av, t_data *data)
 {
@@ -83,7 +68,7 @@ int	main(int ac, char **av)
 	data->fork = sem_open("fork", O_CREAT, 0644, ft_atoi(av[1]));
 	data->av1 = ft_atoi(av[1]);
 	phils_data(ac, av, data);
-	phils_forks(data);
+	phils_forks(data, 0, 0);
 	ft_free(data);
 	return (0);
 }
