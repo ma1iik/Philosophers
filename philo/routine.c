@@ -6,7 +6,7 @@
 /*   By: misrailo <misrailo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 13:01:49 by misrailo          #+#    #+#             */
-/*   Updated: 2022/08/19 15:07:36 by misrailo         ###   ########.fr       */
+/*   Updated: 2022/09/20 06:15:28 by misrailo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	*funeral(void *ptr)
 		if (get_time() - data->starving > data->death_time)
 		{
 			pthread_mutex_lock(&data->output);
-			printf("%ld P %d died\n", get_time() - data->birth, data->phil_id);
+			printf("%ld %d died\n", get_time() - data->birth, data->phil_id);
 			val = 1;
 			*result = val;
 			return ((void *) result);
