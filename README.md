@@ -51,10 +51,5 @@ Logs each state change of a philosopher in the format:
 <timestamp> <philosopher_number> died
 ```
 
-## Gameplay GIF
-![Gameplay](path/to/your-gif.gif)
-
-*(Replace `path/to/your-gif.gif` with the actual path to your GIF file in the project.)*
-
 ## Author
 Developed by [Malik](https://github.com/ma1iik) as part of the 42 School curriculum.
